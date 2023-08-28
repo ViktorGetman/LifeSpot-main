@@ -27,6 +27,15 @@ namespace LifeSpot
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGet("/", async context =>
+                {
+                    // Путь до страницы нашего сайта
+                    var viewPath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "index.html");
+                    // Загружаем страницу сайта
+                    var html = await File.ReadAllTextAsync(viewPath);
+                    // Сервер возвращает ответ
+                    await context.Response.WriteAsync(html);
+                });
                 endpoints.MapGet("/Static/CSS/index.css", async context =>
                 {
                     var cssPath = Path.Combine(Directory.GetCurrentDirectory(), "Static", "CSS", "index.css");
